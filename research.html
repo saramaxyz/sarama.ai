@@ -1,0 +1,594 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research, Sarama</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090b;
+    --surface: #111114;
+    --surface-2: #1a1a1f;
+    --border: #232328;
+    --text: #e4e0d8;
+    --text-dim: #7a7670;
+    --text-muted: #4a4740;
+    --accent: #e06b4a;
+    --accent-glow: rgba(224, 107, 74, 0.12);
+    --accent-2: #c4956a;
+  }
+
+  [data-theme="light"] {
+    --bg: #faf9f7;
+    --surface: #f0eeeb;
+    --surface-2: #e8e5e0;
+    --border: #d4d0ca;
+    --text: #1a1917;
+    --text-dim: #6b6660;
+    --text-muted: #9e9890;
+    --accent: #c85a3a;
+    --accent-glow: rgba(200, 90, 58, 0.12);
+    --accent-2: #a07a55;
+    --nav-bg: rgba(250, 249, 247, 0.85);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(90deg, var(--border) 1px, transparent 1px),
+      linear-gradient(var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  [data-theme="light"] body::before { opacity: 0.18; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--nav-bg, rgba(9, 9, 11, 0.8));
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .logo { display: inline-flex; align-items: center; text-decoration: none; }
+  nav .logo img { height: 22px; width: auto; display: block; }
+  nav .logo .logo-dark { display: block; }
+  nav .logo .logo-light { display: none; }
+  [data-theme="light"] nav .logo .logo-dark { display: none; }
+  [data-theme="light"] nav .logo .logo-light { display: block; }
+  nav .nav-right { display: flex; align-items: center; gap: 32px; }
+  nav ul { display: flex; gap: 32px; list-style: none; }
+  nav ul a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-dim);
+    text-decoration: none; transition: color 0.2s;
+  }
+  nav ul a:hover, nav ul a.active { color: var(--text); }
+  nav ul a.active { color: var(--text); }
+
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 6px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.08em;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .theme-toggle:hover { border-color: var(--text-dim); color: var(--text); }
+  .theme-toggle svg { width: 14px; height: 14px; fill: currentColor; }
+  .theme-toggle .icon-sun, [data-theme="light"] .theme-toggle .icon-moon { display: block; }
+  .theme-toggle .icon-moon, [data-theme="light"] .theme-toggle .icon-sun { display: none; }
+
+  /* HEADER */
+  .page-head {
+    padding: 160px 0 80px;
+    text-align: center;
+  }
+
+  .page-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .page-label::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--text-muted);
+  }
+
+  .page-head h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 32px;
+  }
+
+  .page-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .page-meta .dot { margin: 0 12px; opacity: 0.5; }
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 40px 0 60px;
+  }
+
+  .filter-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover {
+    border-color: var(--text-dim);
+    color: var(--text);
+  }
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+
+  /* PUBLICATIONS LIST */
+  .pubs {
+    padding: 0 0 100px;
+  }
+
+  .pubs-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .pub {
+    display: grid;
+    grid-template-columns: 120px 1fr 140px;
+    gap: 40px;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    align-items: start;
+  }
+  .pub:last-child { border-bottom: 1px solid var(--border); }
+
+  .pub-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    padding-top: 4px;
+  }
+
+  .pub-body h3 {
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .pub-body h3 a {
+    color: inherit;
+    text-decoration: none;
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: color 0.2s;
+  }
+  .pub-body h3 a:hover { color: var(--accent); }
+
+  .pub-authors {
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .pub-venue {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .pub-meta {
+    text-align: right;
+  }
+  .pub-type {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .pub-links {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+  }
+  .pub-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--border);
+    transition: all 0.2s;
+  }
+  .pub-links a:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+  }
+
+  .pub.hidden { display: none; }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .footer-left {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+  footer ul { display: flex; gap: 24px; list-style: none; }
+  footer ul a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  footer ul a:hover { color: var(--text-dim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    nav ul { gap: 18px; }
+    nav ul a { font-size: 10px; }
+    .container { padding: 0 20px; }
+    .page-head { padding: 120px 0 50px; }
+    .pub {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .pub-meta { text-align: left; }
+    .pub-links { justify-content: flex-start; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo" aria-label="Sarama">
+    <img class="logo-dark" src="brand/logo.svg" alt="Sarama">
+    <img class="logo-light" src="https://cdn.prod.website-files.com/66f629803f51b195ab70729a/66fb01b53ca0b3d506f4199a_Logo.svg" alt="Sarama">
+  </a>
+  <div class="nav-right">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/></svg>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </div>
+</nav>
+
+<section class="page-head">
+  <div class="container">
+    <div class="page-label">Publications</div>
+    <h1>Research &amp; Publications</h1>
+    <div class="page-meta">
+      Sarama Lab <span class="dot">·</span> 2024–2026 <span class="dot">·</span> 12 Entries
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="preprint">Preprints</button>
+    <button class="filter-btn" data-filter="working">Working Papers</button>
+    <button class="filter-btn" data-filter="field">Field Notes</button>
+    <button class="filter-btn" data-filter="position">Position Pieces</button>
+    <button class="filter-btn" data-filter="method">Methods</button>
+  </div>
+</div>
+
+<section class="pubs">
+  <div class="container">
+    <div class="pubs-count" id="pubsCount">12 Publications</div>
+
+    <article class="pub" data-type="preprint">
+      <div class="pub-date">2026 · 03</div>
+      <div class="pub-body">
+        <h3><a href="#">Continuous mood estimation from canine vocalization on edge devices</a></h3>
+        <div class="pub-authors">Sarama Research Team</div>
+        <div class="pub-venue">bioRxiv · Under review at ICML Workshop on Animals and AI</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Preprint</div>
+        <div class="pub-links"><a href="#">PDF</a><a href="#">Code</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="working">
+      <div class="pub-date">2026 · 01</div>
+      <div class="pub-body">
+        <h3><a href="#">Pre-symptomatic detection of pain via breath and movement signatures in domestic dogs</a></h3>
+        <div class="pub-authors">Sarama Research Team, with veterinary collaborators</div>
+        <div class="pub-venue">Internal report · v2 under external review</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Working Paper</div>
+        <div class="pub-links"><a href="#">PDF</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="position">
+      <div class="pub-date">2025 · 11</div>
+      <div class="pub-body">
+        <h3><a href="#">From control to connection: a framework for empathy-first animal interfaces</a></h3>
+        <div class="pub-authors">Sarama Research Team</div>
+        <div class="pub-venue">Published, Sarama Position Series #001</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Position</div>
+        <div class="pub-links"><a href="#">PDF</a><a href="#">HTML</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="method">
+      <div class="pub-date">2025 · 09</div>
+      <div class="pub-body">
+        <h3><a href="#">Personalized behavioral baselines from longitudinal wearable audio</a></h3>
+        <div class="pub-authors">Sarama Research Team</div>
+        <div class="pub-venue">Accepted at ACM SenSys 2026 Workshop</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Method</div>
+        <div class="pub-links"><a href="#">PDF</a><a href="#">Code</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="field">
+      <div class="pub-date">2025 · 07</div>
+      <div class="pub-body">
+        <h3><a href="#">Field notes: deploying acoustic collars across 30 households</a></h3>
+        <div class="pub-authors">Sarama Field Team</div>
+        <div class="pub-venue">Sarama Lab Notebook · Issue 04</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Field Note</div>
+        <div class="pub-links"><a href="#">HTML</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="preprint">
+      <div class="pub-date">2025 · 05</div>
+      <div class="pub-body">
+        <h3><a href="#">Self-supervised representations for cross-species vocalization analysis</a></h3>
+        <div class="pub-authors">Sarama Research Team</div>
+        <div class="pub-venue">arXiv preprint · Under review at NeurIPS 2025</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Preprint</div>
+        <div class="pub-links"><a href="#">PDF</a><a href="#">Code</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="method">
+      <div class="pub-date">2025 · 03</div>
+      <div class="pub-body">
+        <h3><a href="#">Compressing bioacoustic models for ARM Cortex-M deployment</a></h3>
+        <div class="pub-authors">Sarama ML Team</div>
+        <div class="pub-venue">tinyML Research Symposium 2025</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Method</div>
+        <div class="pub-links"><a href="#">PDF</a><a href="#">Code</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="working">
+      <div class="pub-date">2025 · 02</div>
+      <div class="pub-body">
+        <h3><a href="#">Heart-rate variability as a non-invasive marker for canine anxiety</a></h3>
+        <div class="pub-authors">Sarama Research Team, with veterinary collaborators</div>
+        <div class="pub-venue">Working draft · Soliciting collaborators</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Working Paper</div>
+        <div class="pub-links"><a href="#">PDF</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="position">
+      <div class="pub-date">2024 · 12</div>
+      <div class="pub-body">
+        <h3><a href="#">Care as a form of intelligence: rethinking the goals of animal ML</a></h3>
+        <div class="pub-authors">Sarama Research Team</div>
+        <div class="pub-venue">Sarama Position Series #000, founding essay</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Position</div>
+        <div class="pub-links"><a href="#">HTML</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="field">
+      <div class="pub-date">2024 · 10</div>
+      <div class="pub-body">
+        <h3><a href="#">Building a 1,000-hour dataset of in-home canine acoustics</a></h3>
+        <div class="pub-authors">Sarama Field &amp; Data Team</div>
+        <div class="pub-venue">Sarama Lab Notebook · Issue 02</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Field Note</div>
+        <div class="pub-links"><a href="#">HTML</a><a href="#">Data</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="preprint">
+      <div class="pub-date">2024 · 08</div>
+      <div class="pub-body">
+        <h3><a href="#">Continuous emotional state estimation: beyond discrete affect categories</a></h3>
+        <div class="pub-authors">Sarama Research Team</div>
+        <div class="pub-venue">arXiv preprint</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Preprint</div>
+        <div class="pub-links"><a href="#">PDF</a></div>
+      </div>
+    </article>
+
+    <article class="pub" data-type="method">
+      <div class="pub-date">2024 · 06</div>
+      <div class="pub-body">
+        <h3><a href="#">Privacy-preserving on-device learning for animal wearables</a></h3>
+        <div class="pub-authors">Sarama ML Team</div>
+        <div class="pub-venue">Workshop on Privacy in ML, ICML 2024</div>
+      </div>
+      <div class="pub-meta">
+        <div class="pub-type">Method</div>
+        <div class="pub-links"><a href="#">PDF</a><a href="#">Code</a></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="max-width:1100px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:center;width:100%;">
+    <div class="footer-left">© 2026 Sarama Research · San Francisco</div>
+    <ul>
+      <li><a href="#">Twitter</a></li>
+      <li><a href="#">GitHub</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const themeLabel = document.getElementById('themeLabel');
+  const savedTheme = localStorage.getItem('sarama-theme');
+  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+  function updateThemeLabel() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    themeLabel.textContent = isLight ? 'Light' : 'Dark';
+  }
+  updateThemeLabel();
+
+  themeToggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('sarama-theme', next);
+    updateThemeLabel();
+  });
+
+  // Filters
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const pubs = document.querySelectorAll('.pub');
+  const pubsCount = document.getElementById('pubsCount');
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let visible = 0;
+      pubs.forEach(pub => {
+        const match = filter === 'all' || pub.dataset.type === filter;
+        pub.classList.toggle('hidden', !match);
+        if (match) visible++;
+      });
+      pubsCount.textContent = `${visible} Publication${visible === 1 ? '' : 's'}`;
+    });
+  });
+</script>
+
+</body>
+</html>
