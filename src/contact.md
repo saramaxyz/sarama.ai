@@ -31,7 +31,7 @@ status:
 <div class="info-label">Beta</div>
 <h3>Enroll your dog.</h3>
 <p>Currently enrolling our 10,000-dog Q3 cohort, scaling to 50,000 in Q4 2026. Help us build the first systems for mutual understanding.</p>
-<a href="https://withsarama.com/questionnaire">→ Request access</a>
+<a href="questionnaire.html">→ Request access</a>
 </div>
 
 <div class="info-block">
@@ -62,8 +62,8 @@ status:
 <div class="info-label">Follow</div>
 <h3>Stay close to the signal.</h3>
 <p>We share progress, datasets, and negative results in the open.</p>
-<a href="#">→ Twitter / X</a><br />
-<a href="#" style="margin-top: 6px; display: inline-block">→ GitHub</a>
+<!-- <a href="#">→ Twitter / X</a><br /> -->
+<a href="https://github.com/saramaxyz" style="display: inline-block">→ GitHub</a>
 </div>
 
 </div>

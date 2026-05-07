@@ -1,0 +1,110 @@
+.questionnaire {
+  padding: 160px 0 100px;
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+}
+.q-container {
+  max-width: 640px;
+}
+.questionnaire h1 {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+.questionnaire h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.questionnaire .page-lede {
+  margin-bottom: 48px;
+}
+
+.q-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 480px;
+}
+.q-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.q-field label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.q-field input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--text);
+  transition: border-color 0.2s;
+  border-radius: 0;
+}
+.q-field input:hover {
+  border-bottom-color: var(--text-dim);
+}
+.q-field input:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.q-submit {
+  align-self: flex-start;
+  margin-top: 16px;
+  padding: 14px 32px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.q-submit:hover {
+  background: #d04a30;
+}
+
+.q-thanks {
+  font-size: 18px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.q-error {
+  margin-top: 16px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.q-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .questionnaire {
+    padding: 110px 0 60px;
+    min-height: 0;
+  }
+  .q-submit {
+    align-self: stretch;
+    padding: 16px 24px;
+    min-height: 44px;
+  }
+}

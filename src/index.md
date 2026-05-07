@@ -96,7 +96,7 @@ signals:
 <h2>The instrument leaves the lab.</h2>
 <p>Tens of thousands of collars entering ordinary homes is the first place where interspecies communication becomes empirical. Dogs first. Methodology general.</p>
 <div class="cta-links">
-<a href="https://withsarama.com/questionnaire" class="primary">Request access</a>
+<a href="questionnaire.html" class="primary">Request access</a>
 <a href="research.html" class="secondary">Read our research</a>
 <a href="contact.html" class="secondary">Talk to us</a>
 </div>

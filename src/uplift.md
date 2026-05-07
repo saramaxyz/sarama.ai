@@ -15,7 +15,7 @@ cta:
   heading: "The instrument leaves the lab."
   lede: When tens of thousands of collars enter ordinary homes, interspecies communication becomes empirical.
   links:
-    - { href: "https://withsarama.com/questionnaire", label: "Request access", style: primary }
+    - { href: "questionnaire.html", label: "Request access", style: primary }
     - { href: "index.html", label: "Home", style: secondary }
     - { href: "research.html", label: "Research", style: secondary }
 ---
