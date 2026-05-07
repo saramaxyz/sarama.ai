@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% include "head-meta.njk" %}
+    {% if jsonLd %}<script type="application/ld+json">{{ jsonLd | dump | safe }}</script>{% endif %}
+  </head>
+  <body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
+    {% if waveform %}<canvas class="waveform-bg" id="waveCanvas" aria-hidden="true"></canvas>{% endif %}
+    <a class="skip-link" href="#main">Skip to content</a>
+    {% include "nav.njk" %}
+    {{ content | safe }}
+    {% include "footer.njk" %}
+    <script src="{{ prefix }}assets/theme.js" defer></script>
+    <script src="{{ prefix }}assets/nav.js" defer></script>
+    {% if waveform %}<script src="{{ prefix }}assets/waveform.js" defer></script>{% endif %}
+    {% if extraScripts %}{% for s in extraScripts %}<script src="{{ prefix }}{{ s }}" defer></script>{% endfor %}{% endif %}
+  </body>
+</html>

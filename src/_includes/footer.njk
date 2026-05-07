@@ -1,0 +1,12 @@
+{% set prefix = prefix | default("") %}
+<footer>
+  {% if footerInner %}<div class="footer-inner">{% endif %}
+  <div class="footer-left">© 2026 Sarama Research · San Francisco</div>
+  <ul>
+    <li><a href="https://github.com/saramaxyz">GitHub</a></li>
+    <li><a href="{{ prefix }}research.html">Research</a></li>
+    <li><a href="{{ prefix }}uplift.html">Philosophy</a></li>
+    <li><a href="{{ prefix }}contact.html">Contact</a></li>
+  </ul>
+  {% if footerInner %}</div>{% endif %}
+</footer>

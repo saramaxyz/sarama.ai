@@ -1,0 +1,32 @@
+---
+layout: layouts/page
+---
+<section class="hero" id="main">
+  <div class="container">
+    {% if eyebrow %}<div class="section-label">{{ eyebrow }}</div>{% endif %}
+    {% if heroTitle %}<h1>{{ heroTitle | safe }}</h1>{% endif %}
+    {% if lead %}<p class="lead">{{ lead | safe }}</p>{% endif %}
+  </div>
+</section>
+<section class="article">
+  <div class="container">
+    <div class="article-inner">
+      {{ content | safe }}
+    </div>
+  </div>
+</section>
+{% if cta %}
+<section class="cta">
+  <div class="container">
+    <h2>{{ cta.heading | safe }}</h2>
+    {% if cta.lede %}<p>{{ cta.lede | safe }}</p>{% endif %}
+    {% if cta.links %}
+    <div class="cta-links">
+      {% for link in cta.links %}
+      <a href="{{ link.href }}"{% if link.style %} class="{{ link.style }}"{% endif %}>{{ link.label }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
