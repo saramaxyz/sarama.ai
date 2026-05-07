@@ -1,0 +1,19 @@
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  padding: 60px 0 100px;
+}
+.page-head h1 { max-width: 18ch; }
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 40px 0 60px;
+  }
+}
+@media (max-width: 480px) {
+  .status-row { flex-wrap: wrap; gap: 6px; font-size: 14px; }
+  .status-row .right { grid-template-columns: auto auto auto; }
+}
