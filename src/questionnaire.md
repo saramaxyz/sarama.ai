@@ -27,6 +27,7 @@ pageStyle: questionnaire
 </div>
 
 <button type="submit" class="q-submit" id="qSubmit">Submit</button>
+
 <p class="q-error" id="qError" hidden></p>
 </form>
 
@@ -36,9 +37,9 @@ pageStyle: questionnaire
 
 <script>
 (function () {
-  var SUPABASE_URL  = {{ supabase.url | dump | safe }};
-  var SUPABASE_KEY  = {{ supabase.publishableKey | dump | safe }};
-  var SUPABASE_TBL  = {{ supabase.table | dump | safe }};
+  var SUPABASE_URL = {{ supabase.url | dump | safe }};
+  var SUPABASE_KEY = {{ supabase.publishableKey | dump | safe }};
+  var SUPABASE_TBL = {{ supabase.table | dump | safe }};
 
   var form    = document.getElementById("qForm");
   var thanks  = document.getElementById("qThanks");
@@ -75,24 +76,17 @@ pageStyle: questionnaire
       body: JSON.stringify({
         name: name,
         email: email,
-        source: "research-lab-site"
+        source: "sarama.ai"
       })
     })
       .then(function (res) {
-        if (res.ok) {
-          form.hidden = true;
-          thanks.hidden = false;
-          return;
+        if (!res.ok && res.status !== 409) {
+          return res.text().then(function (body) {
+            throw new Error("HTTP " + res.status + ": " + body);
+          });
         }
-        if (res.status === 409) {
-          // Duplicate email — treat as success
-          form.hidden = true;
-          thanks.hidden = false;
-          return;
-        }
-        return res.text().then(function (body) {
-          throw new Error("HTTP " + res.status + ": " + body);
-        });
+        // Button already disabled, show success
+        submit.textContent = "Submitted";
       })
       .catch(function (err) {
         console.error(err);
