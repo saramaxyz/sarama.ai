@@ -1,6 +1,6 @@
 ---
 layout: layouts/page
-activeNav: ""
+activeNav: questionnaire
 prefix: ""
 permalink: /questionnaire.html
 title: Request Access | Sarama
@@ -26,12 +26,14 @@ pageStyle: questionnaire
 <input type="email" id="qEmail" name="email" autocomplete="email" required maxlength="320" />
 </div>
 
+<div class="q-actions">
 <button type="submit" class="q-submit" id="qSubmit">Submit</button>
+</div>
 
-<p class="q-error" id="qError" hidden></p>
+<p class="q-error" id="qError" aria-live="polite" hidden></p>
 </form>
 
-<p class="q-thanks" id="qThanks" hidden>Thanks &mdash; we&rsquo;ll be in touch.</p>
+<p class="q-thanks" id="qThanks" aria-live="polite" tabindex="-1" hidden>Thanks &mdash; we&rsquo;ll be in touch.</p>
 </div>
 </section>
 
@@ -45,6 +47,7 @@ pageStyle: questionnaire
   var thanks  = document.getElementById("qThanks");
   var errorEl = document.getElementById("qError");
   var submit  = document.getElementById("qSubmit");
+  var emailInput = form && form.elements.email;
   if (!form) return;
 
   function showError(msg) {
@@ -56,9 +59,13 @@ pageStyle: questionnaire
     e.preventDefault();
     errorEl.hidden = true;
     var name  = form.elements.name.value.trim();
-    var email = form.elements.email.value.trim();
+    var email = emailInput.value.trim();
     if (!name || !email) {
       showError("Please enter your name and email.");
+      return;
+    }
+    if (!emailInput.checkValidity()) {
+      showError("Please enter a valid email address.");
       return;
     }
 
@@ -85,8 +92,12 @@ pageStyle: questionnaire
             throw new Error("HTTP " + res.status + ": " + body);
           });
         }
-        // Button already disabled, show success
         submit.textContent = "Submitted";
+        form.hidden = true;
+        if (thanks) {
+          thanks.hidden = false;
+          thanks.focus();
+        }
       })
       .catch(function (err) {
         console.error(err);

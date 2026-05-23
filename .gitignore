@@ -3,9 +3,7 @@ _site/
 .DS_Store
 
 # Supabase local dev
-supabase/.branches/
-supabase/config.toml
-supabase/seed.sql
+supabase/
 
 .env
 .supabase/

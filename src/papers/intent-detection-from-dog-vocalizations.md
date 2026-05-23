@@ -120,7 +120,6 @@ flowchart TD
   H -->|Pairwise Similarity| M["Fingerprinting"]
   I --> N["Repertoire Cardinality"]
   I --> O["Bark Counter"]
-
   class A source;
   class E,K,L,M,N,O output;
 </pre>

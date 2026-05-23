@@ -405,14 +405,19 @@ footer ul a:hover { color: var(--text-dim); }
   flex-wrap: wrap;
 }
 .cta-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 14px 32px;
   font-family: var(--font-ui);
   font-size: 13px;
+  line-height: 1.2;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 2px;
   transition: all 0.2s;
+  min-height: 48px;
 }
 .cta-links .primary { background: var(--accent); color: #fff; font-weight: 500; }
 .cta-links .primary:hover { background: #d04a30; }
@@ -453,12 +458,16 @@ footer ul a:hover { color: var(--text-dim); }
   border: 1px solid var(--border);
   background: var(--surface);
   padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  font-variant-numeric: tabular-nums;
 }
 .status-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: baseline;
+  column-gap: 12px;
   padding: 10px 0;
   font-family: var(--font-ui);
   font-size: 12px;
@@ -467,19 +476,23 @@ footer ul a:hover { color: var(--text-dim); }
 }
 .status-row:last-child { border-bottom: none; }
 .status-row .key { color: var(--text-muted); }
-.status-row .right {
-  display: grid;
-  grid-template-columns: 56px auto auto;
-  align-items: baseline;
-  gap: 6px;
-  font-variant-numeric: tabular-nums;
-}
+.status-row .right { display: contents; }
 .status-row .num { color: var(--text); text-align: right; }
 .status-row .num.accent,
 .status-row .unit.accent { color: var(--accent); }
 .status-row .unit,
 .status-row .val-wide { color: var(--text); }
-.status-row .status { color: var(--text-muted); margin-left: 6px; }
+.status-row .val-wide { grid-column: 2 / -1; text-align: right; }
+.status-row .status { color: var(--text-muted); margin-left: -6px; }
+.status-row .status::before {
+  content: "•";
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  margin-right: 6px;
+  position: relative;
+  top: -0.08em;
+}
 .status-row .status.active { color: var(--accent); }
 
 /* ========== A11Y ========== */

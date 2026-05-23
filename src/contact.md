@@ -4,16 +4,27 @@ activeNav: contact
 prefix: ""
 footerInner: true
 permalink: /contact.html
-title: Research &amp; Beta Collaborations | Contact Sarama
+title: Research & Beta Collaborations | Contact Sarama
 description: Reach Sarama Research for beta enrollment, veterinary partnerships, press, careers, or research collaborations on interspecies communication.
 canonical: https://sarama.ai/contact.html
 pageStyle: contact
 status:
-  - { key: Location, valWide: "San Francisco, CA" }
-  - { key: Alpha, num: "100", unit: dogs, status: "· complete" }
-  - { key: Beta, num: "1,000", unit: dogs, status: "· complete" }
-  - { key: "Early release", num: "10,000", unit: dogs, status: "· active", active: true, accent: true }
-  - { key: "Commercial release", num: "50,000", unit: dogs, status: "· planned" }
+  - { key: Alpha, num: "100", unit: dogs, status: "in field" }
+  - { key: Beta, num: "1,000", unit: dogs, status: "production" }
+  - {
+      key: "Early release",
+      num: "20,000",
+      unit: dogs,
+      status: "enrollment",
+      active: true,
+      accent: true,
+    }
+  - {
+      key: "Commercial release",
+      num: "50,000",
+      unit: dogs,
+      status: "planned",
+    }
 ---
 
 <section class="page-head" id="main">
@@ -26,6 +37,22 @@ status:
 
 <div class="container">
 <div class="contact-grid">
+
+<div class="info-block">
+<div class="info-label">Email</div>
+<h3>Reach the team directly.</h3>
+<p>Pick the closest mailbox and a real person will respond.</p>
+<a href="mailto:hello@sarama.xyz" style="display: inline-block">→ hello@sarama.xyz</a><br />
+<a href="mailto:invest@sarama.xyz" style="display: inline-block">→ invest@sarama.xyz</a><br />
+<a href="mailto:support@sarama.xyz" style="display: inline-block">→ support@sarama.xyz</a>
+</div>
+
+<div class="info-block">
+<div class="info-label">Research</div>
+<h3>Read our work.</h3>
+<p>Preprints, working papers, field notes, and position pieces from the lab.</p>
+<a href="research.html">→ Browse publications</a>
+</div>
 
 <div class="info-block">
 <div class="info-label">Beta</div>
@@ -49,21 +76,6 @@ status:
 </div>
 {%- endfor %}
 </div>
-</div>
-
-<div class="info-block">
-<div class="info-label">Research</div>
-<h3>Read our work.</h3>
-<p>Preprints, working papers, field notes, and position pieces from the lab.</p>
-<a href="research.html">→ Browse publications</a>
-</div>
-
-<div class="info-block">
-<div class="info-label">Follow</div>
-<h3>Stay close to the signal.</h3>
-<p>We share progress, datasets, and negative results in the open.</p>
-<!-- <a href="#">→ Twitter / X</a><br /> -->
-<a href="https://github.com/saramaxyz" style="display: inline-block">→ GitHub</a>
 </div>
 
 </div>

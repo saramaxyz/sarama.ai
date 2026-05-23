@@ -40,8 +40,49 @@
   max-width: 58ch;
   color: var(--text-dim);
 }
+.hero .primary {
+  display: inline-block;
+  padding: 14px 32px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 500;
+  transition: background 0.2s;
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+.hero .primary:hover { background: #d04a30; }
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 40px;
+}
+.hero-actions .primary { margin-top: 0; margin-bottom: 0; }
+.hero-actions .secondary {
+  display: inline-block;
+  padding: 14px 32px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  background: #fff;
+  color: var(--text);
+  font-weight: 500;
+  border: 1px solid var(--border);
+  transition: border-color 0.2s, color 0.2s;
+}
+.hero-actions .secondary:hover { border-color: var(--text); color: var(--text); }
 .hero-wave {
-  margin-top: 80px;
+  margin-top: 56px;
   display: flex;
   align-items: center;
   gap: 3px;

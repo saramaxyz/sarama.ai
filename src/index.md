@@ -43,6 +43,10 @@ signals:
 <div class="container">
 <h1>An AI research lab for<br /><strong>interspecies communication.</strong><span class="hero-spacer"></span>Our first instrument is <strong>a dog collar.</strong></h1>
 <p class="hero-lede">Sarama studies non-human communication at consumer scale. We spent years decoding whales and dolphins. We still could not understand our own dogs. The collar is the unlock. The lab is the point.</p>
+<div class="hero-actions">
+<a href="questionnaire.html" class="primary">Join the Waitlist</a>
+<a href="contact.html" class="secondary">Talk to us</a>
+</div>
 <div class="hero-wave" id="heroWave"></div>
 </div>
 </section>

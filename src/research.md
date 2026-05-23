@@ -4,7 +4,7 @@ activeNav: research
 prefix: ""
 footerInner: true
 permalink: /research.html
-title: Bioacoustics &amp; Animal Communication Research | Sarama
+title: Bioacoustics & Animal Communication Research | Sarama
 description: Peer-reviewed and working papers from Sarama on bioacoustics, dog vocalization repertoires, sperm whale codas, and self-supervised animal-sound learning.
 canonical: https://sarama.ai/research.html
 pageStyle: research
