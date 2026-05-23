@@ -42,9 +42,9 @@ status:
 <div class="info-label">Email</div>
 <h3>Reach the team directly.</h3>
 <p>Pick the closest mailbox and a real person will respond.</p>
-<a href="mailto:hello@sarama.xyz" style="display: inline-block">→ hello@sarama.xyz</a><br />
-<a href="mailto:invest@sarama.xyz" style="display: inline-block">→ invest@sarama.xyz</a><br />
-<a href="mailto:support@sarama.xyz" style="display: inline-block">→ support@sarama.xyz</a>
+<a href="mailto:hello@sarama.xyz" style="display: inline-block">→ hello@sarama.ai</a><br />
+<a href="mailto:invest@sarama.xyz" style="display: inline-block">→ invest@sarama.ai</a><br />
+<a href="mailto:support@sarama.xyz" style="display: inline-block">→ support@sarama.ai</a>
 </div>
 
 <div class="info-block">
