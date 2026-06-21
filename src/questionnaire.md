@@ -93,6 +93,7 @@ pageStyle: questionnaire
           });
         }
         submit.textContent = "Submitted";
+        if (window.posthog) posthog.capture("signup_completed", { source: "sarama.ai" });
         form.hidden = true;
         if (thanks) {
           thanks.hidden = false;
